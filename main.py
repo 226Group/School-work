@@ -1,27 +1,22 @@
-# import subprocess
-# import os
+import subprocess
+import sys
 
-#запускаем нужный скрипт
-def run (name):
-  # subprocess.run(["python", name + ".py"])
-  os.system(f"python3 -i {name}.py")
+from libs.env_pointer import *
 
+chosen_script = EnvVarPointer("CHOSEN_SCRIPT")
 
-# import runpy
+# Check for run arguments
+if len(sys.argv) > 1:
+    # Set the environment variable to the first argument
+    chosen_script.value = sys.argv[1]
 
-# name = "03.04.py"
-# runpy.run_module(mod_name=name)
+# Prompt the user for input with a timeout of 5 seconds
+chosen_script = (get_input("Please enter the script name (you have 3 seconds): ", 3) 
+    or chosen_script)
+    #TODO bad cause shuts user
 
-# with open("file", "w") as file:
-#   pass
-
-# run("19.04/files")
-# run ("мальтус")
-
-# import py16_02
-
-
-
-
-
-run ("регулярки_24.01")
+# Now, run the script based on the user's choice
+if chosen_script.value is not None:
+    subprocess.run(["python", chosen_script.value])
+else:
+    print("No script selected via env var, argument or user input. Please enter a script filename.")

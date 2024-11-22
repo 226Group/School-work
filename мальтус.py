@@ -19,3 +19,4 @@ plt.ylabel("Численность населения")
 plt.title("Прогноз численности населения по модели Мальтуса")
 plt.grid(True)
 plt.show()
+#FIXME send to VNC
