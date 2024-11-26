@@ -1,4 +1,7 @@
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tkinter as tk
+
 start_year = 1960
 end_year = 2010
 initial_population = 118
@@ -18,4 +21,5 @@ plt.xlabel("Год")
 plt.ylabel("Численность населения")
 plt.title("Прогноз численности населения по модели Мальтуса")
 plt.grid(True)
+
 plt.show()

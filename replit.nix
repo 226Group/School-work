@@ -1,5 +1,6 @@
-{pkgs}: {
-  deps = [
+local
+    # pkgs.skjfddhksa
+    
     pkgs.tk
     pkgs.tcl
     pkgs.qhull
