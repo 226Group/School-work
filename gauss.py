@@ -19,28 +19,42 @@ def gauss(A, b):
     factor = A[i, i]
     A[i, :] /= factor
     b[i] /= factor
-    # Eliminate coefficients below the diagonal
-    for j in range(i + 1, n):
+    # Eliminate coefficients except the diagonal
+    assert A[i, i] == 1
+    
+    for j in range(n):
+      if j == i:
+        continue
       factor = A[j, i]
+      
       A[j, :] -= factor * A[i, :]
       b[j] -= factor * b[i]
 
-  # Back substitution
-  x = np.zeros(n)
-  for i in range(n - 1, -1, -1):
-    x[i] = b[i]
-    for j in range(i + 1, n):
-      x[i] -= A[i, j] * x[j]
+  return b
 
-  return x
 
-# Example usage:
-A = np.array([[2.0, 1.0, 1.0], [1.0, 2.0, 1.0], [1.0, 1.0, 2.0]])
-# A.map(float)
-b = np.array([5.0, 6.0, 7.0])
+# # Example usage:
+# A = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
+# # A.map(float)
+# b = np.array([5.0, 6.0, 7.0])
 
-# A[1, :] = A[1, :] / 2
-# print (A)
 
+# Get matrix dimensions from user
+n = int(input("Enter the number of equations: "))
+A = np.zeros((n, n))
+b = np.zeros(n)
+
+# Get matrix coefficients from user
+print("Enter the coefficients of the matrix, row by row. Separate elements by spaces.")
+for i in range(n):
+  row = list(map(float, input(f"Enter row {i+1}: ").split()))
+  A[i, :] = row
+
+# Get constant vector from user
+print("Enter the constants of the vector, separated by spaces.")
+b = list(map(float, input().split()))
+b = np.array(b)
+
+# Solve the system of equations
 x = gauss(A, b)
-print(x)  # Output: [1. 2. 3.]
+print("Solution:", x)
