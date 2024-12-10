@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+
 start_year = 1960
 end_year = 2010
 initial_population = 118
