@@ -1,5 +1,7 @@
 import numpy as np
 
+# max_index = lambda xs: max(enumerate(0),key=lambda x: x[1])[0] xs
+
 def gauss(A, b):
   """
   Solves a system of linear equations Ax = b using the Gaussian elimination method.
@@ -11,6 +13,7 @@ def gauss(A, b):
   Returns:
     x: The solution vector.
   """
+  # swap_for_max_pivot(A)
 
   n = len(b)
   # Forward elimination
@@ -32,6 +35,11 @@ def gauss(A, b):
 
   return b
 
+def swap_for_max_pivot (A):
+  pass
+  # for i in range(len(A)):
+  #   max_pivot = index(max(A[:, i]))
+    
 
 # # Example usage:
 # A = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])

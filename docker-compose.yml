@@ -1,52 +1,54 @@
 # version: '3.8'
-
 services:
-	postgres:
-		image: postgres: latest
-		container_name: postgres_db 
-		environment:
-			POSTGRES_DB: mydb
-			POSTGRES_USER: user
-			POSTGRES_PASSWORD: password
-			POSTGRES_HOST_AUTH_METHOD: trust
-		volumes:
-			- postgres_data:/var/lib/postgresql/data 
-		restart: always
-		ports:
-			- "5432:5432"
+  postgres:
+    image: 
+      postgres: # latest
+    container_name: postgres_db 
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+    restart: unless_stoped
+    ports:
+      - "5432:5432"
 
 pgweb:
-	image: sosedoff/pgweb:latest
-	container_name: pgweb_ui
-	restart: always
-	ports:
-		"80:8081"
-	depends_on:
-		- postgres
-	environment:
-		DATABASE_URL: postgres://user:password@postgres:5432/mydb?sslmode=disable
-		# Local PostgreSQL connection without protection SSL
+  image: sosedoff/pgweb:latest
+  container_name: pgweb_ui
+  restart: unless_stoped
+  ports:
+    "80:8081"
+  depends_on:
+    - postgres
+  environment:
+    DATABASE_URL: postgres://user:password@postgres:5432/mydb?sslmode=disable
+    # Local PostgreSQL connection without protection SSL
 
-pgadmin:
-	image: dpage/pgadmin4: latest
-	container_name: pgadmin
-	restart: always
-	ports:
-		"5050:80"
-	environment:
-		PGADMIN_DEFAULT_EMAIL: user@local.host 
-		PGADMIN_DEFAULT_PASSWORD: password
-		PGADMIN_CONFIG_ALLOW_SAVE_PASSWORD: "True"
-		# MASTER_PASSWORD_REQUIRED: "False" #FIXME
-	volumes:
-		- pgadmin_data:/var/lib/pgadmin # pgAdmin settings 
-	depends_on:
-		- postgres
+# pgadmin:
+#   image: 
+#     dpage/pgadmin4:
+#       latest
+#   container_name: pgadmin
+#   restart: unless_stoped
+#   ports:
+#     "5050:80"
+#   environment:
+#     PGADMIN_DEFAULT_EMAIL: user@local.host 
+#     PGADMIN_DEFAULT_PASSWORD: password
+#     PGADMIN_CONFIG_ALLOW_SAVE_PASSWORD: "True"
+#     # MASTER_PASSWORD_REQUIRED: "False" #FIXME
+#   volumes:
+#     - pgadmin_data:/var/lib/pgadmin # pgAdmin settings 
+#   depends_on:
+#     - postgres
 
 volumes:
-	postgres_data:
-	gadmin_data:
+  postgres_data:
+  gadmin_data:
 
 #networks:
-#	postgres:
-#		driver: bridge
+#  postgres:
+#    driver: bridge
